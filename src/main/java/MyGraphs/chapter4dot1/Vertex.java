@@ -1,14 +1,18 @@
 package MyGraphs.chapter4dot1;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vertex {
+public class Vertex<T> {
     private final String uuid;
     private List<Connection> connections = new ArrayList<>();
+    private final T data;
 
-    public Vertex(String uuid) {
+    public Vertex(String uuid, T data) {
         this.uuid = uuid;
+        this.data = data;
     }
 
     public void connectVertex(Vertex vertex, Edge e) {
@@ -17,6 +21,19 @@ public class Vertex {
 
     public String getUuid() {
         return uuid;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public List<Connection> getConnections() {
+        return connections;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31).append(uuid).toHashCode();
     }
 
     @Override
