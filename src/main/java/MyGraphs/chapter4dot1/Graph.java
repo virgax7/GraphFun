@@ -1,31 +1,31 @@
 package MyGraphs.chapter4dot1;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Graph<T> {
-    private Map<String, Vertex> vertices = new HashMap<>();
+    private int primaryKey = 0;
+    private List<Vertex<T>> vertices = new ArrayList<>();
 
-    public Graph(T vertexData) {
-        addVertex(new Vertex(UUID.randomUUID().toString(), vertexData));
+    public Graph() {
     }
 
-    public Map<String, Vertex> getVertices() {
+    public List<Vertex<T>> getVertices() {
         return vertices;
     }
 
-    public void addVertex(Vertex vertex) {
-       vertices.put(vertex.getUuid(), vertex);
+    public void addVertex(final Vertex<T> vertex) {
+        primaryKey++;
+        vertices.add(vertex);
     }
 
-    public void connectVertices(Vertex u, Vertex v, Edge e) {
+    public void connectVertices(final Vertex<T> u, final  Vertex<T> v, final Edge e) {
         u.connectVertex(v, e);
         v.connectVertex(u, e);
     }
 
-    public Vertex getVertex(String uuid) {
-        return vertices.get(uuid);
+    public Vertex<T> getVertex(int primaryKey) {
+        return vertices.get(primaryKey);
     }
 
 }

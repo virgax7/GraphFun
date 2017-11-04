@@ -1,23 +1,31 @@
 package MyGraphs.chapter4dot1;
 
-import java.util.List;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DepthFirstSearch {
-    private final Graph graph;
 
-    public DepthFirstSearch(Graph graph) {
-        this.graph = graph;
+    public static void main(String[] args) {
+        System.out.println("Searches connections of all vertices");
+        Graph<Integer> graph = GraphGenerator.getTinyGraph();
+        DepthFirstSearch.dfs(graph);
+        GraphPrinter.printGraph(graph);
     }
 
-    public void dfs() {
-        Vertex vertex = ((Map.Entry<String, Vertex>) graph.getVertices().entrySet().iterator().next()).getValue();
-        for (Connection c : (List<Connection>) vertex.getConnections()) {
-            
+    public static <T> void dfs(final Graph<T> graph) {
+        for (Vertex<T> vertex : graph.getVertices()) {
+            Set<Vertex<T>> connectedPath = new HashSet<Vertex<T>>(){{add(vertex);}};
+            dfs(vertex, connectedPath);
+            System.out.println(connectedPath);
         }
     }
 
-    public void dfs(Vertex v) {
-
+    private static <T> void dfs(final Vertex<T> vertex, Set<Vertex<T>> visited) {
+        for (final Connection c : vertex.getConnections()) {
+            final Vertex<T> curVertex = c.getVertex();
+            if (visited.add(curVertex)) {
+                dfs(curVertex, visited);
+            }
+        }
     }
 }
