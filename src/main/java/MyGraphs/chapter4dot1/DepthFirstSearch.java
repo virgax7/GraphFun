@@ -1,20 +1,20 @@
 package MyGraphs.chapter4dot1;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class DepthFirstSearch {
 
     public static void main(String[] args) {
-        System.out.println("Searches connections of all vertices");
-        Graph<Integer> graph = GraphGenerator.getTinyGraph();
-        DepthFirstSearch.dfs(graph);
+        System.out.println("Now running dfs");
+        final Graph<Integer> graph = GraphGenerator.getTinyIntegerGraph();
+        dfs(graph);
         GraphPrinter.printGraph(graph);
     }
 
     public static <T> void dfs(final Graph<T> graph) {
-        for (Vertex<T> vertex : graph.getVertices()) {
-            Set<Vertex<T>> connectedPath = new HashSet<Vertex<T>>(){{add(vertex);}};
+        for (final Vertex<T> vertex : graph.getVertices()) {
+            final Set<Vertex<T>> connectedPath = new LinkedHashSet<Vertex<T>>(){{add(vertex);}};
             dfs(vertex, connectedPath);
             System.out.println(connectedPath);
         }
@@ -28,4 +28,5 @@ public class DepthFirstSearch {
             }
         }
     }
+
 }

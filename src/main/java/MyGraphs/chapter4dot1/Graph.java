@@ -5,9 +5,10 @@ import java.util.List;
 
 public class Graph<T> {
     private int primaryKey = 0;
-    private List<Vertex<T>> vertices = new ArrayList<>();
+    private final List<Vertex<T>> vertices = new ArrayList<>();
 
-    public Graph() {
+    public int getPrimaryKey() {
+        return primaryKey;
     }
 
     public List<Vertex<T>> getVertices() {

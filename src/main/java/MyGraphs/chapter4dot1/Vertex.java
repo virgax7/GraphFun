@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Vertex<T> {
-    private List<Connection> connections = new ArrayList<>();
+    private final List<Connection> connections = new ArrayList<>();
     private final T data;
 
     public Vertex(final T data) {
