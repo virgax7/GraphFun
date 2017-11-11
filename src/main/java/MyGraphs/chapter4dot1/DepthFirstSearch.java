@@ -21,7 +21,7 @@ public class DepthFirstSearch {
     }
 
     private static <T> void dfs(final Vertex<T> vertex, Set<Vertex<T>> visited) {
-        for (final Connection c : vertex.getConnections()) {
+        for (final Connection<T> c : vertex.getConnections()) {
             final Vertex<T> curVertex = c.getVertex();
             if (visited.add(curVertex)) {
                 dfs(curVertex, visited);

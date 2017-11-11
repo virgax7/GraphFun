@@ -1,10 +1,10 @@
 package MyGraphs.chapter4dot1;
 
-public class Connection {
-    private final Vertex vertex;
+public class Connection<T> {
+    private final Vertex<T> vertex;
     private final Edge edge;
 
-    public Connection(final Vertex vertex,final Edge edge) {
+    public Connection(final Vertex<T> vertex,final Edge edge) {
        this.vertex = vertex;
        this.edge = edge;
     }
