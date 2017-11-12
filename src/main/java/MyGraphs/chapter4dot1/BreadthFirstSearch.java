@@ -15,7 +15,7 @@ public class BreadthFirstSearch {
     }
 
     private static <T> void bfs(final Graph<T> graph) {
-        for (final Vertex<T> vertex : graph.getVertices()) {
+        for (final Vertex<T> vertex : graph.getVerticesList()) {
             final Set<Vertex<T>> connectedPath = new LinkedHashSet<Vertex<T>>(){{add(vertex);}};
             final Deque<Vertex<T>> deque = new ArrayDeque<Vertex<T>>(){{addLast(vertex);}};
             bfs(connectedPath, deque);

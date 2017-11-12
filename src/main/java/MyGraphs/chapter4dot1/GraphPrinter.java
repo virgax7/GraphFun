@@ -1,10 +1,10 @@
 package MyGraphs.chapter4dot1;
 
 public class GraphPrinter {
-    public static <T> void printGraph(final Graph<T> g) {
+    public static <T> void printGraph(final Graph<T> graph) {
         System.out.println("Now printing Graph");
         System.out.println("------------------------------------------------------------");
-        for (final Vertex<T> vertex : g.getVertices()) {
+        for (final Vertex<T> vertex : graph.getVerticesList()) {
             final StringBuilder connectedVertices = new StringBuilder();
             vertex.getConnections().stream().forEach(s -> connectedVertices.append(s.getConnectedVertex() + ", "));
             if (connectedVertices.length() > 1) {

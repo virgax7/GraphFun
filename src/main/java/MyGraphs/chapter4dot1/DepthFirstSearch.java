@@ -13,7 +13,7 @@ public class DepthFirstSearch {
     }
 
     public static <T> void dfs(final Graph<T> graph) {
-        for (final Vertex<T> vertex : graph.getVertices()) {
+        for (final Vertex<T> vertex : graph.getVerticesList()) {
             final Set<Vertex<T>> connectedPath = new LinkedHashSet<Vertex<T>>(){{add(vertex);}};
             dfs(vertex, connectedPath);
             System.out.println(connectedPath);

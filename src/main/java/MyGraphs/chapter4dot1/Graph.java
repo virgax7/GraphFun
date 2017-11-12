@@ -1,23 +1,25 @@
 package MyGraphs.chapter4dot1;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Graph<T> {
-    private int primaryKey = 0;
-    private final List<Vertex<T>> vertices = new ArrayList<>();
+    private final Map<String, Vertex<T>> vertices = new HashMap<>();
 
-    public int getPrimaryKey() {
-        return primaryKey;
-    }
-
-    public List<Vertex<T>> getVertices() {
+    public Map<String, Vertex<T>> getVertices() {
         return vertices;
     }
 
+    public List<Vertex<T>> getVerticesList() {
+        return vertices.entrySet().stream()
+                .map(entry -> entry.getValue())
+                .collect(Collectors.toList());
+    }
+
     public void addVertex(final Vertex<T> vertex) {
-        primaryKey++;
-        vertices.add(vertex);
+        vertices.put(vertex.getUuid(), vertex);
     }
 
     public void connectVertices(final Vertex<T> u, final  Vertex<T> v, final Edge e) {
@@ -25,8 +27,8 @@ public class Graph<T> {
         v.connectVertex(u, e);
     }
 
-    public Vertex<T> getVertex(int primaryKey) {
-        return vertices.get(primaryKey);
+    public Vertex<T> getVertex(final String uuid) {
+        return vertices.get(uuid);
     }
 
 }

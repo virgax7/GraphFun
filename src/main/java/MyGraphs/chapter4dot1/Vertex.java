@@ -1,51 +1,52 @@
 package MyGraphs.chapter4dot1;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Vertex<T> {
-    private final List<Connection<T>> connections = new ArrayList<>();
-    private final int primaryKey;
+    private final String uuid;
+    private final List<Connection> connections = new ArrayList<>();
     private final T data;
 
-    public Vertex(final T data, Graph<T> graph) {
+    public Vertex(T data) {
+        this.uuid = UUID.randomUUID().toString();
         this.data = data;
-        graph.addVertex(this);
-        this.primaryKey = graph.getPrimaryKey();
     }
 
-    public void connectVertex(final Vertex<T> vertex, final Edge e) {
-        connections.add(new Connection<T>(vertex, e));
+    public void connectVertex(Vertex vertex, Edge e) {
+        connections.add(new Connection(vertex, e));
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     public T getData() {
         return data;
     }
 
-    public int getPrimaryKey() {
-        return primaryKey;
-    }
-
-    public List<Connection<T>> getConnections() {
+    public List<Connection> getConnections() {
         return connections;
     }
 
     @Override
     public int hashCode() {
-        return primaryKey;
+        return new HashCodeBuilder(17, 31).append(uuid).toHashCode();
     }
 
     @Override
-    public boolean equals(Object obj) {
-       if (obj == null || !(obj instanceof Vertex)) {
-           return false;
-       }
-       return obj == this || ((Vertex) obj).getPrimaryKey() == getPrimaryKey();
+    public boolean equals(final Object obj) {
+        if (obj == null || !(obj instanceof  Vertex)) {
+            return false;
+        }
+        return obj == this || ((Vertex) obj).uuid == this.uuid;
     }
 
     @Override
     public String toString() {
-        return data.toString();
+        return data + "";
     }
-
 }
