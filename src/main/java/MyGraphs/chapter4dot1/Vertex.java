@@ -5,10 +5,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Vertex<T> {
     private final String uuid;
-    private final List<Connection> connections = new ArrayList<>();
+    private final List<Connection<T>> connections = new ArrayList<>();
     private final T data;
 
     public Vertex(T data) {
@@ -16,8 +17,8 @@ public class Vertex<T> {
         this.data = data;
     }
 
-    public void connectVertex(Vertex vertex, Edge e) {
-        connections.add(new Connection(vertex, e));
+    public void connectVertex(Vertex<T> vertex, Edge e) {
+        connections.add(new Connection<T>(vertex, e));
     }
 
     public String getUuid() {
@@ -28,8 +29,14 @@ public class Vertex<T> {
         return data;
     }
 
-    public List<Connection> getConnections() {
+    public List<Connection<T>> getConnections() {
         return connections;
+    }
+
+    public List<Vertex<T>> getConnectedVertices() {
+        return connections.stream()
+                .map(connection -> connection.getVertex())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -42,11 +49,15 @@ public class Vertex<T> {
         if (obj == null || !(obj instanceof  Vertex)) {
             return false;
         }
-        return obj == this || ((Vertex) obj).uuid == this.uuid;
+        return obj == this || ((Vertex<T>) obj).uuid.equals(this.uuid);
+    }
+
+    public String printData() {
+        return getData() + "";
     }
 
     @Override
     public String toString() {
-        return data + "";
+        return "[" + getUuid().substring(0,4) + ", " + data + "]";
     }
 }

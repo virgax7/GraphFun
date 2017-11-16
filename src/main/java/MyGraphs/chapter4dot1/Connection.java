@@ -9,7 +9,7 @@ public class Connection<T> {
        this.edge = edge;
     }
 
-    public Vertex getVertex() {
+    public Vertex<T> getVertex() {
         return vertex;
     }
 
