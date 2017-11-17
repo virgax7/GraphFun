@@ -1,12 +1,10 @@
 package MyGraphs.chapter4dot1;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Graph<T> {
-    private final Map<String, Vertex<T>> vertices = new HashMap<>();
+    private final Map<String, Vertex<T>> vertices = new LinkedHashMap<>();
 
     public Map<String, Vertex<T>> getVertices() {
         return vertices;
@@ -31,4 +29,11 @@ public class Graph<T> {
         return vertices.get(uuid);
     }
 
+    public boolean hasParallelEdge(){
+        return getVerticesList().stream()
+                .map(vertex -> vertex.getConnectedVertices())
+                .anyMatch(connectedVertices -> connectedVertices.stream()
+                        .anyMatch(tVertex -> Collections.frequency(connectedVertices, tVertex) > 1)
+                );
+    }
 }

@@ -2,7 +2,6 @@ package MyGraphs.chapter4dot1;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,18 +9,11 @@ public class Bridge {
 
     public static void main(String[] args) {
         Graph<Integer> graph;
-        while (hasParallelEdges(graph = GraphGenerator.getTinyIntegerGraph()));
+        while ((graph = GraphGenerator.getTinyIntegerGraph()).hasParallelEdge());
         printBridges(graph);
         GraphPrinter.printGraphWithOnlyData(graph);
     }
 
-    public static <T> boolean hasParallelEdges(final Graph<T> graph) {
-        return graph.getVerticesList().stream()
-                .map(vertex -> vertex.getConnectedVertices())
-                .anyMatch(connectedVertices -> connectedVertices.stream()
-                        .anyMatch(tVertex -> Collections.frequency(connectedVertices, tVertex) > 1)
-                );
-    }
 
     public static <T> void printBridges(final Graph<T> graph) {
         final Map<String, Integer> pre = new HashMap<>();
@@ -46,18 +38,20 @@ public class Bridge {
            final Vertex<T> adjVertex = c.getVertex();
            if (pre.get(adjVertex.getUuid()) == -1) {
               dfs(curVertex, adjVertex, count, pre, low);
-              low.put(curVertex.getUuid(), low.get(curVertex.getUuid()) < low.get(adjVertex.getUuid())
-                      ? low.get(curVertex.getUuid())
-                      : low.get(adjVertex.getUuid()));
-              if (low.get(adjVertex.getUuid()) == pre.get(adjVertex.getUuid())) {
+               putMinValue(low, low, curVertex, adjVertex);
+               if (low.get(adjVertex.getUuid()) == pre.get(adjVertex.getUuid())) {
                   System.out.println("bridge exists between " + curVertex.printData() + " and " + adjVertex.printData());
               }
            } else if (!adjVertex.equals(prevVertex)) {
-               low.put(curVertex.getUuid(), low.get(curVertex.getUuid()) < pre.get(adjVertex.getUuid())
-                   ? low.get(curVertex.getUuid())
-                   : pre.get(adjVertex.getUuid()));
+               putMinValue(pre, low, curVertex, adjVertex);
            }
         }
    }
+
+    private static <T> void putMinValue(final Map<String, Integer> map1, final Map<String, Integer> map2, final Vertex<T> curVertex, final Vertex<T> adjVertex) {
+        map2.put(curVertex.getUuid(), map2.get(curVertex.getUuid()) < map1.get(adjVertex.getUuid())
+            ? map2.get(curVertex.getUuid())
+            : map1.get(adjVertex.getUuid()));
+    }
 
 }
