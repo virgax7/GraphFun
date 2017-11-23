@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 // all edges have uniform weight
 public class BreadthFirstPaths <T> {
-    final Map<Vertex<T>, Boolean> marked = new HashMap<>();
+    final Set<Vertex<T>> marked = new HashSet<>();
     final Map<Vertex<T>, Vertex<T>> edgeTo = new HashMap<>();
     final Vertex<T> source;
 
@@ -14,15 +14,14 @@ public class BreadthFirstPaths <T> {
         bfs(source);
     }
 
-    private void bfs(final Vertex<T> source) {
+    protected void bfs(final Vertex<T> source) {
         final Deque<Vertex<T>> deque = new ArrayDeque<>();
         deque.add(source);
         while (!deque.isEmpty()) {
            final Vertex<T> vertex = deque.removeFirst();
            for (final Vertex<T> adjVertex : vertex.getConnectedVertices()) {
-               if (marked.get(adjVertex) == null) {
+               if (marked.add(adjVertex)) {
                     edgeTo.put(adjVertex, vertex);
-                    marked.put(adjVertex, true);
                     deque.addLast(adjVertex);
                }
            }
@@ -30,7 +29,7 @@ public class BreadthFirstPaths <T> {
     }
 
     public boolean hasPathTo(final Vertex<T> destination) {
-       return marked.get(destination) != null;
+       return marked.contains(destination);
     }
 
     public List<Vertex<T>> getPathTo(final Vertex<T> destination) {
