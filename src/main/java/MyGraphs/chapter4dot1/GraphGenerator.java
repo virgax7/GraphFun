@@ -3,6 +3,7 @@ package MyGraphs.chapter4dot1;
 import java.util.Random;
 
 public class GraphGenerator {
+
     public static Graph getTinyIntegerGraph() {
         final Graph<Integer> tinyGraph = new Graph<>();
         for (int i = 0; i < 12; i++) {
@@ -17,4 +18,5 @@ public class GraphGenerator {
         }
         return tinyGraph;
     }
+
 }

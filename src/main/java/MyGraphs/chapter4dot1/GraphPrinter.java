@@ -1,10 +1,11 @@
 package MyGraphs.chapter4dot1;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class GraphPrinter {
 
-    private static <T> Function<Vertex<T>, Void> regularVertexPrintStrategy(final Function<Vertex<T>, ? extends String> vertexToString) {
+    private static <T> Consumer<Vertex<T>> regularVertexPrintStrategy(final Function<Vertex<T>, ? extends String> vertexToString) {
         return vertex -> {
             final StringBuilder connectedVertices = new StringBuilder();
             vertex.getConnections().stream().forEach(s -> connectedVertices.append(vertexToString.apply(s.getVertex()) + ", "));
@@ -12,23 +13,22 @@ public class GraphPrinter {
                 connectedVertices.setLength(connectedVertices.length() - 2);
             }
             System.out.println(vertexToString.apply(vertex) + ": " + connectedVertices);
-            return null;
         };
     }
 
     public static <T> void printGraph(final Graph<T> graph) {
-        graphPrintAspect(graph, regularVertexPrintStrategy(vertex -> {return vertex.toString();}));
+        graphPrintAspect(graph, regularVertexPrintStrategy(vertex -> vertex.toString()));
     }
 
     public static <T> void printGraphWithOnlyData(final Graph<T> graph) {
-        graphPrintAspect(graph, regularVertexPrintStrategy(vertex -> {return vertex.printData();}));
+        graphPrintAspect(graph, regularVertexPrintStrategy(vertex -> vertex.printData()));
     }
 
-    public static <T> void graphPrintAspect(final Graph<T> graph, final Function<Vertex<T>, Void> vertexPrintStrategy) {
+    public static <T> void graphPrintAspect(final Graph<T> graph, final Consumer<Vertex<T>> vertexPrintStrategy) {
         System.out.println("Now printing Graph");
         System.out.println("------------------------------------------------------------");
         for (final Vertex<T> vertex : graph.getVerticesList()) {
-            vertexPrintStrategy.apply(vertex);
+            vertexPrintStrategy.accept(vertex);
         }
         System.out.println("------------------------------------------------------------");
     }
