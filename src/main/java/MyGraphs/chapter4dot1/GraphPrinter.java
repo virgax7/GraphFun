@@ -27,9 +27,7 @@ public class GraphPrinter {
     public static <T> void graphPrintAspect(final Graph<T> graph, final Consumer<Vertex<T>> vertexPrintStrategy) {
         System.out.println("Now printing Graph");
         System.out.println("------------------------------------------------------------");
-        for (final Vertex<T> vertex : graph.getVerticesList()) {
-            vertexPrintStrategy.accept(vertex);
-        }
+        graph.getVerticesList().stream().forEach(vertex -> vertexPrintStrategy.accept(vertex));
         System.out.println("------------------------------------------------------------");
     }
 }
