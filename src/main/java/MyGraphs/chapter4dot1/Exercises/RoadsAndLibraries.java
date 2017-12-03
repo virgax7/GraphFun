@@ -8,12 +8,12 @@ public class RoadsAndLibraries {
         final Scanner in = new Scanner(System.in);
         final int queries = in.nextInt();
         for(int i = 0; i < queries; i++){
-            final List<Integer>[] graph = IntStream.range(0, in.nextInt() + 1).boxed()
-                    .map(vertex -> new ArrayList<>(Arrays.asList(vertex))).toArray(List[]::new);
+            final List<Integer>[] graph = IntStream.range(0, in.nextInt() + 1)
+                    .mapToObj(vertex -> new ArrayList<>(Arrays.asList(vertex))).toArray(List[]::new);
             final int numberOfRoads = in.nextInt();
             final long libraryCost = in.nextLong();
             final long roadCost = in.nextLong();
-            IntStream.range(0, numberOfRoads).boxed().map($ -> new int[] {in.nextInt(), in.nextInt()})
+            IntStream.range(0, numberOfRoads).mapToObj($ -> new int[] {in.nextInt(), in.nextInt()})
                     .forEach(cities -> {graph[cities[0]].add(cities[1]); graph[cities[1]].add(cities[0]);});
             final Set<Integer> visited = new HashSet<>();
             long result = 0;
