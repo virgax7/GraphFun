@@ -1,0 +1,16 @@
+Continuation of a once started self project on learning Graphs from a pool of my private repos 
+
+
+Thought hard about a rather non traditional way of representing graphs, which can be better managed and more scalable than other approaches I seen IMO.
+
+That is, if you don't want to rely on an external libs, which you should do rely on them(well-tested and  more effort went in them)... But... it's just for practice so why not?
+
+
+I kind of littered the project with basic problems, and will probably do so in the future...
+
+
+Will pick up more algs and practice problems once I have a bit more fun with writing concurrent code
+
+
+
+Why? Because, in the future, I hope to integrate Graphs into the backend for Augment for different reasons, one being connecting users
